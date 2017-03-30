@@ -1,0 +1,53 @@
+const int pinBtnUp = 0;
+2. 
+3.const int pinLEDOutput = 11;
+4. 
+5.//Variables for the states of the SNES buttons
+6.boolean boolBtnUp;
+7. 
+8. 
+9.void setup()
+10.{
+11.  //Setup the pin modes.
+12.  pinMode( pinLEDOutput, OUTPUT );
+13.  //Special for the Teensy is the INPUT_PULLUP
+14.  //It enables a pullup resitor on the pin.
+15.  pinMode( pinBtnUp, INPUT_PULLUP );
+16. 
+17.  //Zero the SNES controller button keys:
+18.  boolBtnUp = false;
+19. 
+20.}
+21. 
+22. 
+23.void loop()
+24.{
+25.//  //debugging the start button...
+26.  digitalWrite ( pinLEDOutput, digitalRead(pinBtnUp));
+27. 
+28.  //Progess the SNES controller buttons to send keystrokes.
+29.  fcnProcessButtons();
+30.  
+31.}
+32. 
+33.//Function to process the buttons from the SNES controller
+34.void fcnProcessButtons()
+35.{
+36.  //Assign temporary values for the buttons.
+37.  //Remember, the SNES buttons are read as active LOW.
+38.  //Capture their status here:
+39.  boolean boolBtnUp = !digitalRead(pinBtnUp);
+40. 
+41.  if ( boolBtnUp )
+42.  {
+43.    //Set key1 to the U key
+44.    Keyboard.set_key1( KEY_U );
+45.  } else {
+46.    Keyboard.set_key1( 0 );
+47.  }
+48.    
+49.  //Send all of the set keys.
+50.  Keyboard.send_now();
+51. 
+52. 
+53.}
